@@ -1,0 +1,158 @@
+[project]
+name = "fastapi-template"
+version = "0.1.1"
+description = "Add description here (this is a template)"
+authors = [{name = "German Aragon Caminero", email = "german.aragon@unican.es"}]
+readme = "README.md"
+requires-python = ">=3.9"
+classifiers = [
+    "Topic :: Scientific/Engineering",
+    "Topic :: Scientific/Engineering :: Physics",
+    "Development Status :: 1 - Planning",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+]
+
+dependencies = [
+    "email-validator>=2.3.0",
+    "fastapi[standard]>=0.121.2",
+    "opentelemetry-api>=1.38.0",
+    "opentelemetry-distro>=0.59b0",
+    "opentelemetry-exporter-otlp>=1.38.0",
+    "opentelemetry-instrumentation>=0.59b0",
+    "opentelemetry-instrumentation-fastapi>=0.59b0",
+    "opentelemetry-instrumentation-httpx>=0.59b0",
+    "opentelemetry-instrumentation-logging>=0.59b0",
+    "opentelemetry-instrumentation-requests>=0.59b0",
+    "opentelemetry-sdk>=1.38.0",
+]
+
+[project.urls]
+github = ""
+home = ""
+swagger = ""
+
+[tool.pytest]
+pythonpath = ["."] # set this to "." then "src" folder is founded
+addopts = ["-p no:warnings"]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+
+[tool.coverage.run]
+command_line = "-m pytest"
+omit = ["*/tests/*"]
+source = ["src"]
+
+[tool.ruff]
+line-length = 120
+indent-width = 4
+exclude = [
+    ".bzr",
+    ".direnv",
+    ".eggs",
+    ".git",
+    ".git-rewrite",
+    ".hg",
+    ".ipynb_checkpoints",
+    ".mypy_cache",
+    ".nox",
+    ".pants.d",
+    ".pyenv",
+    ".pytest_cache",
+    ".pytype",
+    ".ruff_cache",
+    ".svn",
+    ".tox",
+    ".venv",
+    ".vscode",
+    "__pypackages__",
+    "_build",
+    "buck-out",
+    "build",
+    "dist",
+    "node_modules",
+    "site-packages",
+    "venv",
+    "data",
+]
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+line-ending = "auto"
+
+[tool.ruff.lint]
+select = ["ALL"]
+fixable = ["ALL"]
+ignore = [
+    "BLE001", # catch blind exceptions
+    "COM812", # trailing comma
+    "D107",   # missing docstring in __init__ fn
+    "D100",   # undocumented modules
+    "D202",   # allow blank line after fn docstring
+    "D410",   # allow no blank line after docstring section
+    "D411",   # allow blank line before docstring section
+    "D413",   # no-blank line after last docstring section
+    "D205",   # long description in docstrings
+    "DTZ001", # timezone-naive datetime
+    "DTZ003", # allow datetime.utcnow() (deprecated)
+    "DTZ005", # times with naive timezone
+    "EM101",  # string literals in exceptions
+    "EM102",  # formatted messages in exceptions
+    "ERA001", # long comments
+    "FBT001", # boolean positional args in fn definitions
+    "FBT002", # boolean default positional args in fn definitions
+    "FIX002", # unresolved TODOs 
+    "G004",   # allow f-strings when logging
+    "N806",   # uppercase variable names
+    "N813",   # camelcase imported as lowercase (e.g. `import netCDF as nc`)
+    "N816",   # mixed-case variable names
+    "PD002",  # inplace operations
+    "PD901",  # `df` as datagrame variable name
+    "PD011",  # use .variables instead of .to_numpy()
+    "S602",   # subprocess with shell=True
+    "S607",   # run subprocess with partial PATH
+    "TC001",  # typing only firstparty-import
+    "T201",   # `print` statements,
+    "TD002",  # `TODO` without issue links
+    "TD003",  # `TODO` without issue links
+    "TD004",  # `TODO` without issue links
+    "TD005",  # `TODO` without issue links
+    "TRY002", # raise vanilla exceptions
+    "TRY003", # specify long exception message within Exception constructor
+    "TRY300", # no-else after if with raise
+]
+
+[tool.ruff.lint.extend-per-file-ignores]
+"tests/**/*.py" = [
+    "ANN201", # do not require annotations in test functions
+    "D103",   # missing docstring in test functions
+    "INP001", # do not require __init__.py files in test directories
+    "S101",   # use of `assert` statements,
+    "S108",   # use of /tmp dir in tests
+]
+
+[tool.ruff.lint.pylint]
+max-args = 10
+
+[tool.ruff.lint.isort]
+combine-as-imports = true
+detect-same-package = true
+force-wrap-aliases = true
+no-sections = true
+order-by-type = true
+relative-imports-order = "closest-to-furthest"
+
+[dependency-groups]
+dev = [
+    "coverage[toml]>=7.10.7",
+    "pytest>=8.4.2",
+]

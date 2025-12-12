@@ -1,0 +1,97 @@
+name: Create Release
+
+on:
+  pull_request:
+    types:
+      - closed
+    branches:
+      - main
+    paths:
+      # almost the same as check-main-pr.yml, except for tests and this workflow file
+      - ".github/workflows/release.yml" # this file
+      - "src/**"
+      - "scripts/**.sh"
+      - "Dockerfile"
+      - "dockerignore"
+      - ".python-version"
+      - "pyproject.toml"
+      - "uv.lock"
+      - ".bumpversion.cfg"
+  workflow_dispatch:
+    # one can also create a release, optionally setting the version part to bump
+    inputs:
+      bump_version_part:
+        description: "Bump version part"
+        required: false
+        default: "patch"
+        type: choice
+        options:
+          - patch
+          - minor
+          - major
+
+env:
+  DEFAULT_BUMP_VERSION_PART: patch
+
+jobs:
+  create-release:
+    # Only run if PR is merged (not just closed) OR if manually dispatched
+    if: github.event.pull_request.merged == true || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          # fetch full history, so release notes can be generated
+          fetch-depth: 0
+          ssh-key: ${{ secrets.GH_DEPLOY }}
+
+      - name: Build Docker image without Buildx (for compatibility with Ansible playbook)
+        run: DOCKER_BUILDKIT=0 docker build --build-arg GITHUB_TOKEN=${{ secrets.PAT }} --target deployment -t teseo-apiprocess .
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+
+      - name: "Set up Python"
+        uses: actions/setup-python@v5
+        with:
+          python-version-file: ".python-version"
+
+      - name: Register the personal access token
+        run: echo "${{ secrets.PAT }}" | gh auth login --with-token
+      
+      - name: Configure the Git credential helper
+        run: gh auth setup-git
+      
+      - name: Commit and push next version bump to develop branch
+        id: update_version
+        run: |
+          BUMP_VERSION_PART=${{ inputs.bump_version_part || env.DEFAULT_BUMP_VERSION_PART }}
+          NEW_VERSION=$(uvx --from bump2version bumpversion --list ${BUMP_VERSION_PART} | grep new_version | sed -r s,"^.*=",,)
+          uv lock --upgrade-package teseo-apiprocess
+          git config --local user.name "github-actions[bot]"
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git add .bumpversion.cfg pyproject.toml uv.lock
+          git commit -m "Bump version to v${NEW_VERSION}"
+          git push origin HEAD:develop
+          git push origin HEAD:main
+          echo "version=$NEW_VERSION" >> $GITHUB_OUTPUT
+        
+      - name: Create tag for current version
+        run: |
+          git config --local user.name "github-actions[bot]"
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git tag v${{ steps.update_version.outputs.version }}
+          git push origin v${{ steps.update_version.outputs.version }}
+
+      - name: Create Release for current version
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: v${{ steps.update_version.outputs.version }}
+          name: Release v${{ steps.update_version.outputs.version }}
+          draft: false
+          prerelease: false
+          generate_release_notes: true

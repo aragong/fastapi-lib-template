@@ -1,0 +1,61 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the
+// README at: https://github.com/devcontainers/templates/tree/main/src/ubuntu
+{
+	"name": "fastapi-template",
+	"build": {
+		"dockerfile": "../Dockerfile",
+		// sets the repository root directory as context for the Dockerfile,
+		// meaning COPY commands can take files from the repo,
+		// including custom scripts, files, etc
+		"context": "../",
+		"target": "local_development"
+	},
+	"features": {
+		"ghcr.io/nils-geistmann/devcontainers-features/zsh:0": {},
+		"ghcr.io/phil-bell/devcontainer-features/antigen:1": {
+			"theme": "obraun",
+			"bundles": [
+				"git",
+				"zsh-users/zsh-syntax-highlighting",
+				"zsh-users/zsh-autosuggestions",
+				"zsh-users/zsh-completions"
+			]
+		},
+		"ghcr.io/rocker-org/devcontainer-features/apt-packages:1": {
+			// installed apt packages
+			// - gnupg2: for adding GPG keys (signing git commits)
+			// - ncl-ncarg: NCL (NCAR Command Language) so that netCDF Preview extension works properly
+			"packages": "gnupg2,ncl-ncarg"
+		}
+	},
+	"mounts": [
+		// mounts from local ${HOME}/roms_data to devcontainer `./data`
+		// NOTE: Make sure the `source` points to an existing directory, otherwise create it or comment this line
+		// "source=/mnt,target=${containerWorkspaceFolder}/data,type=bind,consistency=cached"
+	],
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"waderyan.gitblame",
+				"mhutchie.git-graph",
+				"charliermarsh.ruff",
+				"ms-python.python",
+				"ms-python.vscode-pylance",
+				"ms-toolsai.jupyter",
+				"tamasfe.even-better-toml",
+				"redhat.vscode-yaml",
+				"gruntfuggly.todo-tree",
+				"Feliks.ncpreview",
+				"nhoizey.gremlins",
+				"bierner.markdown-preview-github-styles",
+				"DavidAnson.vscode-markdownlint",
+				"bierner.markdown-emoji"
+			]
+		}
+	},
+	// "initializeCommand": "mkdir -p ${HOME}/roms_data",
+	// "onCreateCommand": "uv sync --frozen",
+	// setting rebase strategy, also avoiding "dubious ownership in dev containers"
+	// see: https://www.kenmuse.com/blog/avoiding-dubious-ownership-in-dev-containers/
+	"postStartCommand": "git config pull.rebase false &&git config --global --add safe.directory ${containerWorkspaceFolder}"
+}

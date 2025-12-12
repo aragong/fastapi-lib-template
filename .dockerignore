@@ -1,0 +1,10 @@
+.devcontainer
+.pytest_cache
+.venv
+.vscode
+data
+notebooks
+old
+.env*
+*.log
+README.md
