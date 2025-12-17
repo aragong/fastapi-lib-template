@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from logging import getLogger
-from src.config.env import env
+from src.api.config.env import env
 
 logger = getLogger(__name__)
 

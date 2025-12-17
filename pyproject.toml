@@ -1,5 +1,5 @@
 [project]
-name = "fastapi-template"
+name = "fastapi-lib-template"
 version = "0.1.1"
 description = "Add description here (this is a template)"
 authors = [{name = "German Aragon Caminero", email = "german.aragon@unican.es"}]

@@ -9,13 +9,12 @@ from fastapi.security import OAuth2PasswordBearer
 from fastapi.staticfiles import StaticFiles
 from opentelemetry import trace
 from opentelemetry.instrumentation.fastapi import FastAPIInstrumentor
-from src.__version__ import __api_name__, __description__, __version__
-from src.config.env import env
-from src.core.middelware import LoggingMiddleware
-from src.core.telemetry import setup_opentelemetry
-from src.core.utils import generate_root_html
-from src.routers.test import test_router
-
+from src.api.__version__ import __api_name__, __description__, __version__
+from src.api.config.env import env
+from src.api.core.middelware import LoggingMiddleware
+from src.api.core.telemetry import setup_opentelemetry
+from src.api.core.utils import generate_root_html
+from src.api.routers.test import test_router
 
 logger = logging.getLogger(__name__)
 
@@ -111,4 +110,4 @@ app.include_router(test_router)  # Test router first
 if __name__ == "__main__":
     import uvicorn
 
-    uvicorn.run("src.main:app", reload=True)
+    uvicorn.run("src.api.main:app", reload=True)

@@ -6,7 +6,7 @@ import logging
 import time
 from fastapi import APIRouter, HTTPException, status
 from opentelemetry import trace
-from src.config.env import env
+from src.api.config.env import env
 
 logger = logging.getLogger(__name__)
 tracer = trace.get_tracer(__name__)

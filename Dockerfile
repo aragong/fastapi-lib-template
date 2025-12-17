@@ -86,5 +86,5 @@ COPY cert.crt /certificados/cert.crt
 COPY cert.key /certificados/cert.key
 
 # Run the service
-CMD ["uvicorn", "src.main:app", "--host", "0.0.0.0", "--port", "443", "--ssl-keyfile=/certificados/cert.key", "--ssl-certfile=/certificados/cert.crt"]
+CMD ["uvicorn", "src.api.main:app", "--host", "0.0.0.0", "--port", "443", "--ssl-keyfile=/certificados/cert.key", "--ssl-certfile=/certificados/cert.crt"]
 
