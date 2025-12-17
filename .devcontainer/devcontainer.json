@@ -1,7 +1,7 @@
 // For format details, see https://aka.ms/devcontainer.json. For config options, see the
 // README at: https://github.com/devcontainers/templates/tree/main/src/ubuntu
 {
-	"name": "fastapi-template",
+	"name": "fastapi-lib-template",
 	"build": {
 		"dockerfile": "../Dockerfile",
 		// sets the repository root directory as context for the Dockerfile,
@@ -14,7 +14,7 @@
 		"ghcr.io/nils-geistmann/devcontainers-features/zsh:0": {},
 		"ghcr.io/phil-bell/devcontainer-features/antigen:1": {
 			"theme": "obraun",
-			"bundles": [
+			"plugins": [
 				"git",
 				"zsh-users/zsh-syntax-highlighting",
 				"zsh-users/zsh-autosuggestions",
