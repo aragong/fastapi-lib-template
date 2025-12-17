@@ -1,4 +1,10 @@
 import logging
+from api.__version__ import __api_name__, __description__, __version__
+from api.config.env import env
+from api.core.middelware import LoggingMiddleware
+from api.core.telemetry import setup_opentelemetry
+from api.core.utils import generate_root_html
+from api.routers.test import test_router
 from collections.abc import AsyncGenerator
 from contextlib import asynccontextmanager
 from fastapi import FastAPI
@@ -9,12 +15,7 @@ from fastapi.security import OAuth2PasswordBearer
 from fastapi.staticfiles import StaticFiles
 from opentelemetry import trace
 from opentelemetry.instrumentation.fastapi import FastAPIInstrumentor
-from src.api.__version__ import __api_name__, __description__, __version__
-from src.api.config.env import env
-from src.api.core.middelware import LoggingMiddleware
-from src.api.core.telemetry import setup_opentelemetry
-from src.api.core.utils import generate_root_html
-from src.api.routers.test import test_router
+from pathlib import Path
 
 logger = logging.getLogger(__name__)
 
@@ -77,7 +78,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-app.mount("/static", StaticFiles(directory="static"), name="static")
+app.mount("/static", StaticFiles(directory=Path("src/api/static").resolve()), name="static")
 
 
 @app.get("/docs", include_in_schema=False)
@@ -110,4 +111,4 @@ app.include_router(test_router)  # Test router first
 if __name__ == "__main__":
     import uvicorn
 
-    uvicorn.run("src.api.main:app", reload=True)
+    uvicorn.run("api.main:app", reload=True)

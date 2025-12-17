@@ -4,9 +4,10 @@ import asyncio
 import httpx
 import logging
 import time
+from api.config.env import env
 from fastapi import APIRouter, HTTPException, status
+from lib.services.processing import fake_processing_task
 from opentelemetry import trace
-from src.api.config.env import env
 
 logger = logging.getLogger(__name__)
 tracer = trace.get_tracer(__name__)
@@ -139,3 +140,12 @@ async def telemetry_debug():
             "spans_created": 4,  # 1 main + 3 debug spans
             "check_seq": "Should appear in Seq within 1-2 seconds",
         }
+
+
+@test_router.get("/lib-function-test")
+async def test_lib_function() -> str:
+    """A simple test function in the library."""
+
+    output = fake_processing_task("test data")
+
+    return "Library function executed successfully"

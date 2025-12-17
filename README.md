@@ -30,7 +30,7 @@ pip install -e ".[dev]"
 cp .env .env.local
 
 # Run development server
-python -m uvicorn src.api.main:app --reload
+python -m uvicorn api.main:app --app-dir src --reload
 
 # Run tests
 pytest

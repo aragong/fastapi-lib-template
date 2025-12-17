@@ -11,8 +11,10 @@
             "request": "launch",
             "module": "uvicorn",
             "args": [            
-                "src.api.main:app",
+                "api.main:app",
                 "--reload",
+                "--app-dir",
+                "${workspaceFolder}/src"
             ],
             "jinja": true
         }

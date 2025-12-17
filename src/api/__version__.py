@@ -9,10 +9,9 @@ from typing import Any
 @lru_cache(maxsize=1)
 def _load_project_metadata() -> dict[str, Any]:
     """Load project metadata from pyproject.toml with caching."""
-    # Find pyproject.toml relative to this file
+    # Find pyproject.toml relative to this file (in src/api/)
     current_dir = Path(__file__).parent
-    project_root = current_dir.parent.parent
-    pyproject_path = project_root / "pyproject.toml"
+    pyproject_path = current_dir / "pyproject.toml"
 
     if not pyproject_path.exists():
         raise FileNotFoundError(f"pyproject.toml not found at {pyproject_path}")

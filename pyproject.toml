@@ -1,43 +1,11 @@
-[project]
-name = "fastapi-lib-template"
-version = "0.1.1"
-description = "Add description here (this is a template)"
-authors = [{name = "German Aragon Caminero", email = "german.aragon@unican.es"}]
-readme = "README.md"
-requires-python = ">=3.9"
-classifiers = [
-    "Topic :: Scientific/Engineering",
-    "Topic :: Scientific/Engineering :: Physics",
-    "Development Status :: 1 - Planning",
-    "Programming Language :: Python",
-    "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3 :: Only",
-    "Programming Language :: Python :: 3.9",
-    "Programming Language :: Python :: 3.10",
-    "Programming Language :: Python :: 3.11",
-    "Programming Language :: Python :: 3.12",
-    "Programming Language :: Python :: 3.13",
-]
+[tool.uv.workspace]
+members = ["src/api", "src/lib"]
 
-dependencies = [
-    "email-validator>=2.3.0",
-    "fastapi[standard]>=0.121.2",
-    "matplotlib>=3.9.4",
-    "opentelemetry-api>=1.38.0",
-    "opentelemetry-distro>=0.59b0",
-    "opentelemetry-exporter-otlp>=1.38.0",
-    "opentelemetry-instrumentation>=0.59b0",
-    "opentelemetry-instrumentation-fastapi>=0.59b0",
-    "opentelemetry-instrumentation-httpx>=0.59b0",
-    "opentelemetry-instrumentation-logging>=0.59b0",
-    "opentelemetry-instrumentation-requests>=0.59b0",
-    "opentelemetry-sdk>=1.38.0",
+[tool.uv]
+dev-dependencies = [
+    "coverage[toml]>=7.10.7",
+    "pytest>=8.4.2",
 ]
-
-[project.urls]
-github = ""
-home = ""
-swagger = ""
 
 [tool.pytest]
 pythonpath = ["."] # set this to "." then "src" folder is founded
@@ -151,9 +119,3 @@ force-wrap-aliases = true
 no-sections = true
 order-by-type = true
 relative-imports-order = "closest-to-furthest"
-
-[dependency-groups]
-dev = [
-    "coverage[toml]>=7.10.7",
-    "pytest>=8.4.2",
-]

@@ -2,8 +2,8 @@
 
 from __future__ import annotations
 
+from api.config.env import env
 from logging import getLogger
-from src.api.config.env import env
 
 logger = getLogger(__name__)
 

@@ -4,6 +4,8 @@ from __future__ import annotations
 
 import logging
 import os
+from api.__version__ import __api_name__, __version__
+from api.config.env import env
 from opentelemetry import _logs, trace
 from opentelemetry.exporter.otlp.proto.http._log_exporter import OTLPLogExporter
 from opentelemetry.exporter.otlp.proto.http.trace_exporter import OTLPSpanExporter
@@ -15,8 +17,6 @@ from opentelemetry.sdk._logs.export import BatchLogRecordProcessor
 from opentelemetry.sdk.resources import Resource
 from opentelemetry.sdk.trace import TracerProvider
 from opentelemetry.sdk.trace.export import BatchSpanProcessor
-from src.api.__version__ import __api_name__, __version__
-from src.api.config.env import env
 from uuid import uuid4
 
 logger = logging.getLogger(__name__)
