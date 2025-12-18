@@ -1,5 +1,5 @@
 [tool.uv.workspace]
-members = ["src/api", "src/lib"]
+members = ["src/template_api", "src/template_lib"]
 
 [tool.uv]
 dev-dependencies = [

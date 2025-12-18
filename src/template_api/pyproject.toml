@@ -11,7 +11,7 @@ authors = [
 dependencies = [
     "email-validator>=2.3.0",
     "fastapi[standard]>=0.121.2",
-    "lib",
+    "template-lib",
     "opentelemetry-api>=1.38.0",
     "opentelemetry-distro>=0.59b0",
     "opentelemetry-exporter-otlp>=1.38.0",
@@ -24,7 +24,7 @@ dependencies = [
 ]
 
 [tool.uv.sources]
-lib = { workspace = true }
+template-lib = { workspace = true }
 
 [build-system]
 requires = ["hatchling"]

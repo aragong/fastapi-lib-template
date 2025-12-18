@@ -30,13 +30,6 @@ class Environment:
     # Telemetry
     _traces = os.getenv("EXPORT_TRACES", "true").lower()
     EXPORT_TRACES = _traces not in ["0", "false", "no"]
-    OTEL_SERVICE_NAME = os.getenv("OTEL_SERVICE_NAME")
-    OTEL_SERVICE_VERSION = os.getenv("OTEL_SERVICE_VERSION")
-    OTEL_TRACES_EXPORTER = os.getenv("OTEL_TRACES_EXPORTER")
-    OTEL_LOGS_EXPORTER = os.getenv("OTEL_LOGS_EXPORTER")
-
-    OTEL_EXPORTER_OTLP_ENDPOINT = os.getenv("OTEL_EXPORTER_OTLP_ENDPOINT")
-    OTEL_EXPORTER_OTLP_PROTOCOL = os.getenv("OTEL_EXPORTER_OTLP_PROTOCOL")
 
     _excluded_urls = os.getenv("OTEL_PYTHON_EXCLUDED_URLS", "")
     OTEL_PYTHON_EXCLUDED_URLS = _excluded_urls.split(",") if _excluded_urls else []

@@ -172,36 +172,48 @@ All environment variables are managed in [src/template_api/config/env.py](src/te
 | Variable | Default | Description |
 |----------|---------|-------------|
 | `APP_ENVIRONMENT` | `local` | Environment mode: `local`, `development`, or `production` |
-| `API_PREFIX` | `""` | API route prefix (e.g., `/v1/public`) |
+| `API_PREFIX` | `/v1/public` | API route prefix (e.g., `/v1/public`) |
 
 ### Optional Variables
 
 | Variable | Default | Description |
 |----------|---------|-------------|
-| `API_ROOT_PATH` | `""` | Root path for proxy deployments |
-| `TMP_DIR` | `./tmp` | Temporary files directory |
-| `EXPORT_TRACES` | `true` | Enable OpenTelemetry trace export |
-| `OTEL_SERVICE_NAME` | - | Service name for telemetry |
-| `OTEL_SERVICE_VERSION` | - | Service version for telemetry |
-| `OTEL_EXPORTER_OTLP_ENDPOINT` | - | OTLP collector endpoint (e.g., `http://localhost:4317`) |
-| `OTEL_EXPORTER_OTLP_PROTOCOL` | - | Protocol: `grpc` or `http/protobuf` |
-| `OTEL_PYTHON_EXCLUDED_URLS` | `""` | Comma-separated paths to exclude from tracing |
+| `API_ROOT_PATH` | `/template-api` | Root path for proxy deployments |
+| `TMP_DIR` | `tmp` | Temporary files directory |
+| `EXPORT_TRACES` | `false` | Enable OpenTelemetry trace export |
+| `OTEL_SERVICE_VERSION` | `0.2.3` | Service version for telemetry |
+| `OTEL_EXPORTER_OTLP_ENDPOINT` | `http://host.docker.internal:5341/ingest/otlp/v1` | OTLP collector endpoint |
+| `OTEL_EXPORTER_OTLP_PROTOCOL` | `http/protobuf` | Protocol: `grpc` or `http/protobuf` |
+| `OTEL_PYTHON_LOG_CORRELATION` | `true` | Enable log correlation with traces |
+| `OTEL_PYTHON_LOG_LEVEL` | `debug` | Python logging level for OpenTelemetry |
+| `OTEL_PYTHON_LOG_FORMAT` | `"'%(asctime).19s %(levelname)8s - %(message)s [%(name)s.py:%(lineno)d]'"` | Python log format string |
+| `OTEL_PYTHON_FASTAPI_EXCLUDED_URLS` | `static` | FastAPI-specific excluded URLs |
+| `OTEL_PYTHON_EXCLUDED_URLS` | `/,/template-api,/static,/docs,/openapi.json,/favicon.ico,/redoc` | Comma-separated paths to exclude from tracing |
 
 ### Example `.env` File
 
 ```bash
-# Application
+# Application environment
 APP_ENVIRONMENT=local
-API_PREFIX=/v1/public
-TMP_DIR=./tmp
 
-# Observability (optional)
-EXPORT_TRACES=true
-OTEL_SERVICE_NAME=my-fastapi-service
-OTEL_SERVICE_VERSION=0.1.0
-OTEL_EXPORTER_OTLP_ENDPOINT=http://localhost:4318/v1
+# Root path for deployment behind a reverse proxy
+API_ROOT_PATH=/template-api
+API_PREFIX=/v1/public
+
+# Directory path for data
+TMP_DIR=tmp
+
+# OpenTelemetry - Observability configuration
+EXPORT_TRACES=false
+
+OTEL_SERVICE_VERSION=0.2.3
+OTEL_EXPORTER_OTLP_ENDPOINT=http://host.docker.internal:5341/ingest/otlp/v1
 OTEL_EXPORTER_OTLP_PROTOCOL=http/protobuf
-OTEL_PYTHON_EXCLUDED_URLS=/healthcheck,/metrics
+OTEL_PYTHON_LOG_CORRELATION=true
+OTEL_PYTHON_LOG_LEVEL=debug
+OTEL_PYTHON_LOG_FORMAT="'%(asctime).19s %(levelname)8s - %(message)s [%(name)s.py:%(lineno)d]'"
+OTEL_PYTHON_FASTAPI_EXCLUDED_URLS="static"
+OTEL_PYTHON_EXCLUDED_URLS="/,/template-api,/static,/docs,/openapi.json,/favicon.ico,/redoc"
 ```
 
 ## 📦 Dependencies
