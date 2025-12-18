@@ -430,7 +430,7 @@ class TestDataService:
 
 ## Decision Tree: E2E vs Unit Test?
 
-```
+```json
 Can this be tested without mocking?
 │
 ├─ YES → Does it test a complete workflow?
