@@ -274,14 +274,14 @@ app.include_router(myfeature_router)
 ### Running Tests
 
 ```bash
-# All tests
+# All tests (both packages)
 pytest .
 
-# Verbose output
-pytest -v
+# API tests only
+pytest src/template_api/tests/ -v
 
-# Specific test file
-pytest src/template_api/tests/test_api.py -v
+# Library tests only
+pytest src/template_lib/tests/ -v
 
 # With coverage
 coverage run
@@ -289,28 +289,29 @@ coverage report
 coverage html  # Open htmlcov/index.html
 ```
 
-### Test Structure
+### Test Organization
 
-Tests use FastAPI's `TestClient` for endpoint testing:
+**API Tests** ([src/template_api/tests/](src/template_api/tests/)) - Use FastAPI's `TestClient`:
 
 ```python
 from fastapi.testclient import TestClient
 from template_api.main import app
 
-client = TestClient(app)
-
 def test_healthcheck():
+    client = TestClient(app)
     response = client.get("/v1/public/test/healthcheck")
     assert response.status_code == 200
-    assert response.json()["status"] == "ok"
 ```
 
-### Writing Tests
+**Library Tests** ([src/template_lib/tests/](src/template_lib/tests/)) - Pure Python unit tests:
 
-- Place tests in [src/template_api/tests/](src/template_api/tests/)
-- Use `pytest` fixtures for reusable setup
-- Test with `TestClient` for API endpoints
-- Mock external dependencies when needed
+```python
+from template_lib.services.processing import process_data
+
+def test_processing():
+    result = process_data(input_data)
+    assert result == expected_output
+```
 
 ## 🔍 Observability
 
