@@ -50,7 +50,7 @@ jobs:
           ssh-key: ${{ secrets.GH_DEPLOY }}
 
       - name: Build Docker image without Buildx (for compatibility with Ansible playbook)
-        run: DOCKER_BUILDKIT=0 docker build --build-arg GITHUB_TOKEN=${{ secrets.PAT }} --target deployment -t teseo-apiprocess .
+        run: DOCKER_BUILDKIT=0 docker build --build-arg GITHUB_TOKEN=${{ secrets.PAT }} --target deployment -t docker-image-name .
 
       - name: Install uv
         uses: astral-sh/setup-uv@v5
