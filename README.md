@@ -26,13 +26,19 @@ src/
 │   ├── config/           # Environment configuration
 │   ├── core/             # Telemetry, middleware, utilities
 │   ├── routers/          # API endpoint definitions
+│   │   └── test.py       # Example test router
 │   ├── services/         # Business logic layer
 │   ├── models/           # Pydantic data models
 │   └── tests/            # API tests
+│       ├── e2e/          # End-to-end tests (no mocking)
+│       └── unit/         # Unit tests (fast, isolated)
 │
 └── template_lib/          # Reusable library package
     ├── models/           # Shared data models
-    └── services/         # Data processing logic
+    ├── services/         # Data processing logic
+    └── tests/            # Library tests
+        ├── e2e/          # End-to-end tests
+        └── unit/         # Unit tests
 ```
 
 ## 🎯 Using This Template
@@ -238,13 +244,12 @@ lib = { workspace = true }
 
 Example endpoints demonstrating FastAPI patterns and OpenTelemetry integration:
 
-| Endpoint | Method | Description | Response |
+| Endpoint | Method | Description | Purpose |
 |----------|--------|-------------|----------|
-| `/healthcheck` | GET | Service health check | `{"status": "ok", "message": "Service is running"}` |
-| `/error` | GET | Error handling and logging demo | 500 error with trace |
-| `/logs-test` | GET | Multiple log levels demonstration | Log correlation with traces |
-| `/external-api-test` | GET | External HTTP call with tracing | Automatic span propagation |
-| `/nested-operations` | GET | Nested async operations with spans | Multi-level trace visualization |
+| `/healthcheck` | GET | Service health check | Verify API is running |
+| `/error` | GET | Error handling demo | Exception handling with traceback logging |
+| `/external-call` | GET | External HTTP call | Automatic tracing of external services |
+| `/processing` | GET | Multi-step workflow | Nested spans + library function call |
 
 ### Adding New Endpoints
 
@@ -278,11 +283,17 @@ Example endpoints demonstrating FastAPI patterns and OpenTelemetry integration:
 # All tests (both packages)
 pytest .
 
-# API tests only
-pytest src/template_api/tests/ -v
+# API E2E tests
+pytest src/template_api/tests/e2e/ -v
 
-# Library tests only
+# API unit tests
+pytest src/template_api/tests/unit/ -v
+
+# Library tests
 pytest src/template_lib/tests/ -v
+
+# Skip slow tests
+pytest -m "not slow"
 
 # With coverage
 coverage run
@@ -292,26 +303,41 @@ coverage html  # Open htmlcov/index.html
 
 ### Test Organization
 
-**API Tests** ([src/template_api/tests/](src/template_api/tests/)) - Use FastAPI's `TestClient`:
+Tests are organized in **two levels** per package:
+
+```
+src/template_api/tests/
+├── e2e/              # End-to-end tests (no mocking)
+│   └── test_basics.py
+└── unit/             # Unit tests (fast, isolated)
+
+src/template_lib/tests/
+├── e2e/              # End-to-end tests
+└── unit/             # Unit tests
+```
+
+**E2E Tests** - Real integration, no mocking:
 
 ```python
+import pytest
 from fastapi.testclient import TestClient
 from template_api.main import app
 
-def test_healthcheck():
-    client = TestClient(app)
+@pytest.mark.e2e
+def test_healthcheck(client: TestClient):
     response = client.get("/v1/public/test/healthcheck")
     assert response.status_code == 200
+    assert response.json()["status"] == "ok"
 ```
 
-**Library Tests** ([src/template_lib/tests/](src/template_lib/tests/)) - Pure Python unit tests:
+**Unit Tests** - Fast, isolated:
 
 ```python
 from template_lib.services.processing import process_data
 
 def test_processing():
-    result = process_data(input_data)
-    assert result == expected_output
+    result = process_data("test input")
+    assert result == "TEST INPUT"
 ```
 
 ## 🔍 Observability
