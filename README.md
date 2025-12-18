@@ -249,25 +249,26 @@ Example endpoints demonstrating FastAPI patterns and OpenTelemetry integration:
 ### Adding New Endpoints
 
 1. Create router in [src/template_api/routers/](src/template_api/routers/)
+
 2. Use `env.API_PREFIX` for consistency:
 
-```python
-from template_api.config.env import env
-from fastapi import APIRouter
+    ```python
+    from template_api.config.env import env
+    from fastapi import APIRouter
 
-router = APIRouter(tags=["MyFeature"], prefix=env.API_PREFIX + "/myfeature")
+    router = APIRouter(tags=["MyFeature"], prefix=env.API_PREFIX + "/myfeature")
 
-@router.get("/")
-async def my_endpoint():
-    return {"message": "Hello"}
-```
+    @router.get("/")
+    async def my_endpoint():
+        return {"message": "Hello"}
+    ```
 
 3. Register in [src/template_api/main.py](src/template_api/main.py):
 
-```python
-from template_api.routers.myfeature import router as myfeature_router
-app.include_router(myfeature_router)
-```
+    ```python
+    from template_api.routers.myfeature import router as myfeature_router
+    app.include_router(myfeature_router)
+    ```
 
 ## 🧪 Testing
 
