@@ -1,6 +1,6 @@
 """API to provide online simulation service of TESEO numerical model."""
 
-from api.__version__ import __api_name__, __description__, __version__
+from template_api.__version__ import __api_name__, __description__, __version__
 
 __all__ = ["__api_name__", "__description__", "__version__"]
 

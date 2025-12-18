@@ -1,5 +1,5 @@
 [project]
-name = "api"
+name = "template-api"
 version = "0.1.1"
 description = "FastAPI application with OpenTelemetry"
 readme = "../../README.md"

@@ -2,7 +2,7 @@
 
 import logging
 import time
-from api.config.env import env
+from template_api.config.env import env
 from starlette.middleware.base import BaseHTTPMiddleware
 from starlette.requests import Request
 from starlette.responses import Response

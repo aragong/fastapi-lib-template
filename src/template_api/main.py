@@ -1,10 +1,10 @@
 import logging
-from api.__version__ import __api_name__, __description__, __version__
-from api.config.env import env
-from api.core.middelware import LoggingMiddleware
-from api.core.telemetry import setup_opentelemetry
-from api.core.utils import generate_root_html
-from api.routers.test import test_router
+from template_api.__version__ import __api_name__, __description__, __version__
+from template_api.config.env import env
+from template_api.core.middelware import LoggingMiddleware
+from template_api.core.telemetry import setup_opentelemetry
+from template_api.core.utils import generate_root_html
+from template_api.routers.test import test_router
 from collections.abc import AsyncGenerator
 from contextlib import asynccontextmanager
 from fastapi import FastAPI
@@ -78,7 +78,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-app.mount("/static", StaticFiles(directory=Path("src/api/static").resolve()), name="static")
+app.mount("/static", StaticFiles(directory=Path("src/template_api/static").resolve()), name="static")
 
 
 @app.get("/docs", include_in_schema=False)

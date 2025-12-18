@@ -4,9 +4,9 @@ import asyncio
 import httpx
 import logging
 import time
-from api.config.env import env
+from template_api.config.env import env
 from fastapi import APIRouter, HTTPException, status
-from lib.services.processing import fake_processing_task
+from template_lib.services.processing import fake_processing_task
 from opentelemetry import trace
 
 logger = logging.getLogger(__name__)

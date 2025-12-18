@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from api.config.env import env
+from template_api.config.env import env
 from logging import getLogger
 
 logger = getLogger(__name__)

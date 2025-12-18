@@ -4,8 +4,8 @@ from __future__ import annotations
 
 import logging
 import os
-from api.__version__ import __api_name__, __version__
-from api.config.env import env
+from template_api.__version__ import __api_name__, __version__
+from template_api.config.env import env
 from opentelemetry import _logs, trace
 from opentelemetry.exporter.otlp.proto.http._log_exporter import OTLPLogExporter
 from opentelemetry.exporter.otlp.proto.http.trace_exporter import OTLPSpanExporter

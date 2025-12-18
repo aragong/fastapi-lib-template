@@ -1,5 +1,5 @@
 import pytest
-from api.main import app
+from template_api.main import app
 from fastapi import status
 from fastapi.testclient import TestClient
 
