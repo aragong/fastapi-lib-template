@@ -103,7 +103,7 @@ adjusted_time = timestamp + timedelta(hours=1)
 
 #### Type Hints
 
-**Always use type hints for function signatures**
+Always use type hints for function signatures
 
 ##### Input Parameters: Be General (Accept Broad Types)
 

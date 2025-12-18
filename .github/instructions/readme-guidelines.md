@@ -7,6 +7,7 @@ applyTo: 'README.md'
 ## Automatic Updates
 
 When making changes to the project, **always update the README** if:
+
 - New endpoints are added to the API
 - Environment variables are added or modified
 - Dependencies are added or changed
@@ -16,17 +17,20 @@ When making changes to the project, **always update the README** if:
 ## Required Sections
 
 ### 1. Header & Badges
+
 - Project name with clear description
 - Badges: Python version, FastAPI version, License, Build status
 - Brief one-line description of what the project does
 
 ### 2. Overview
+
 - What is this project?
 - Main purpose and use cases
 - Key features (3-5 bullet points)
 - Architecture diagram (optional but recommended)
 
 ### 3. Quick Start
+
 ```bash
 # Complete setup from clone to running server
 git clone [repo]
@@ -38,11 +42,13 @@ python -m uvicorn template_api.main:app --app-dir src --reload
 ```
 
 ### 4. Project Structure
+
 - Directory tree with descriptions
 - Explain the monorepo structure (api vs lib)
 - Purpose of each main directory
 
 ### 5. Environment Variables
+
 **Complete table format:**
 
 | Variable | Required | Default | Description |
@@ -54,9 +60,11 @@ python -m uvicorn template_api.main:app --app-dir src --reload
 Include example `.env` file content.
 
 ### 6. API Endpoints
+
 **Organized by router/tag:**
 
 #### Test Endpoints (`/v1/public/test`)
+
 | Endpoint | Method | Description | Request | Response |
 |----------|--------|-------------|---------|----------|
 | `/healthcheck` | GET | Service health status | - | `{status: "ok"}` |
@@ -65,11 +73,13 @@ Include example `.env` file content.
 ### 7. Development
 
 #### Installation Options
+
 - Standard pip installation
 - UV package manager (preferred)
 - Dev container setup
 
 #### Running Locally
+
 ```bash
 # Development server
 python -m uvicorn template_api.main:app --app-dir src --reload
@@ -79,6 +89,7 @@ python -m uvicorn template_api.main:app --app-dir src --host 0.0.0.0 --port 8080
 ```
 
 #### Code Quality
+
 ```bash
 # Formatting
 ruff format .
@@ -93,6 +104,7 @@ mypy src/
 ### 8. Testing
 
 #### Running Tests
+
 ```bash
 # All tests
 pytest .
@@ -106,6 +118,7 @@ coverage html  # Generate HTML report
 ```
 
 #### Test Structure
+
 - Where tests are located
 - How to add new tests
 - Testing patterns used (TestClient, fixtures, etc.)
@@ -113,12 +126,14 @@ coverage html  # Generate HTML report
 ### 9. Observability
 
 #### OpenTelemetry Setup
+
 - How tracing works in this project
 - Required OTLP endpoint configuration
 - Enabling/disabling traces
 - Log correlation with traces
 
 #### Monitoring
+
 - Available metrics
 - Log aggregation setup
 - Trace visualization tools (Jaeger, Zipkin, etc.)
@@ -126,6 +141,7 @@ coverage html  # Generate HTML report
 ### 10. Deployment
 
 #### Docker
+
 ```bash
 # Build
 docker build -t template-api:latest .
@@ -135,6 +151,7 @@ docker run -p 8000:8000 -e APP_ENVIRONMENT=production template-api:latest
 ```
 
 #### Production Considerations
+
 - Environment-specific configurations
 - Recommended settings for production
 - Security considerations
@@ -142,32 +159,39 @@ docker run -p 8000:8000 -e APP_ENVIRONMENT=production template-api:latest
 ### 11. Dependencies
 
 #### Core Dependencies
+
 List and explain main dependencies:
+
 - **FastAPI** - Web framework
 - **OpenTelemetry** - Observability
 - **Uvicorn** - ASGI server
 - etc.
 
 #### Development Dependencies
+
 - pytest, ruff, coverage, etc.
 
 ### 12. Workspace Structure
 
 Explain the UV workspace setup:
+
 ```toml
 [tool.uv.workspace]
 members = ["src/template_api", "src/template_lib"]
 ```
+
 - How packages interact
 - When to add code to API vs LIB
 - Dependency management between packages
 
 ### 13. Contributing (Optional)
+
 - Code style guide
 - Pull request process
 - Testing requirements
 
 ### 14. License & Credits
+
 - License type and restrictions
 - Author information
 - Organization/institution
@@ -175,7 +199,7 @@ members = ["src/template_api", "src/template_lib"]
 ## Formatting Standards
 
 - Use emoji icons for visual sections (🚀 ⚙️ 📚 🧪 🐳 etc.)
-- Code blocks must specify language (```bash, ```python, etc.)
+- Code blocks must specify language (```bash```, ```python```, etc.)
 - Keep command examples copy-pasteable
 - Use tables for structured data
 - Include links to relevant files using relative paths
