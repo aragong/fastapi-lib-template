@@ -11,7 +11,7 @@
             "request": "launch",
             "module": "uvicorn",
             "args": [            
-                "api.main:app",
+                "template_api.main:app",
                 "--reload",
                 "--app-dir",
                 "${workspaceFolder}/src"
