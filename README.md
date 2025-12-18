@@ -52,42 +52,52 @@ git clone https://github.com/IHCantabria/fastapi-template.git your-project-name
 cd your-project-name
 ```
 
-### 2. Rename Packages
+### 2. Rename Variables
 
-**Critical**: Replace `template_api` and `template_lib` with your actual package names:
+**📦 Nombres de paquetes:**
+
+- Renombrar carpetas:
+  - `src/template_api/` → `src/your_api_name/`
+  - `src/template_lib/` → `src/your_lib_name/`
+- Actualizar en `pyproject.toml` raíz: `members = ["src/your_api_name", "src/your_lib_name"]`
+- Actualizar en `src/your_api_name/pyproject.toml`: `name = "your-api-name"`
+- Actualizar en `src/your_lib_name/pyproject.toml`: `name = "your-lib-name"`
+- Actualizar en `.bumpversion.cfg`: rutas de los archivos pyproject.toml
+- Buscar y reemplazar en **todos los archivos Python**: `template_api` → `your_api_name` y `template_lib` → `your_lib_name`
+
+**👤 Metadata de autor:**
+
+- Actualizar en ambos `pyproject.toml` de los paquetes:
+  - `name = "Your Name"`
+  - `email = "your.email@example.com"`
+
+**🐳 Configuración Docker:**
+
+- `Dockerfile`: Cambiar `ARG APP_NAME=fastapi-lib-template` → `ARG APP_NAME=your-project-name`
+- `.github/workflows/release.yml`: Cambiar `docker-image-name` por el nombre de tu imagen Docker
+
+**🔧 DevContainer:**
+
+- `.devcontainer/devcontainer.json`: Cambiar `"name": "fastapi-lib-template"` → `"name": "your-project-name"`
+
+**⚙️ GitHub Actions:**
+
+- `.github/workflows/release.yml`: Verificar nombres de ramas (`main`, `develop`) y ajustar según tu estrategia de branching
+
+**🌐 Variables de entorno:**
+
+- `.env`: Actualizar `OTEL_SERVICE_NAME=your-service-name`
+
+**Comando para verificar:**
 
 ```bash
-# Rename directories
-mv src/template_api src/your_api_name
-mv src/template_lib src/your_lib_name
-
-# Update workspace configuration in pyproject.toml
-# Change:
-#   members = ["src/template_api", "src/template_lib"]
-# To:
-#   members = ["src/your_api_name", "src/your_lib_name"]
-
-# Update package names in:
-# - src/your_api_name/pyproject.toml (name = "your-api-name")
-# - src/your_lib_name/pyproject.toml (name = "your-lib-name")
-# - All import statements throughout the codebase
+# Buscar referencias no renombradas
+grep -r "template_api\|template_lib\|template-api\|fastapi-lib-template" \
+  --exclude-dir={.venv,__pycache__,.git} \
+  --exclude="*.md"  # Excluir documentación
 ```
 
-### 3. Update Metadata
-
-Edit `src/your_api_name/pyproject.toml`:
-
-```toml
-[project]
-name = "your-api-name"
-version = "0.1.0"
-description = "Your API description"
-authors = [
-    { name = "Your Name", email = "your.email@example.com" }
-]
-```
-
-### 4. Configure Environment
+### 3. Configure Environment
 
 ```bash
 # Copy environment template
