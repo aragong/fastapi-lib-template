@@ -163,7 +163,7 @@ coverage report
 coverage html  # Open htmlcov/index.html
 ```
 
-## � Environment Variables
+## 🌐 Environment Variables
 
 All environment variables are managed in [src/template_api/config/env.py](src/template_api/config/env.py).
 
